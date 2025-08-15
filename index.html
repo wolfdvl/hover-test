@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hover Player</title>
+  <style>
+    .hover-container {
+      position: relative;
+      margin-bottom: 20px;
+      padding-right: 30px;
+    }
+
+    .hover-container:hover .play-button {
+      opacity: 1;
+    }
+
+    .play-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background: #0078D7;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="hover-container">
+    <p>This is paragraph one. Hover to play.</p>
+    <button class="play-button" data-audio="audio1">▶ Play</button>
+  </div>
+
+  <div class="hover-container">
+    <p>This is paragraph two. Hover to play.</p>
+    <button class="play-button" data-audio="audio2">▶ Play</button>
+  </div>
+
+  <!-- Hidden audio elements -->
+  <audio id="audio1" src="audio1.mp3"></audio>
+  <audio id="audio2" src="audio2.mp3"></audio>
+
+  <script>
+    const buttons = document.querySelectorAll('.play-button');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const audioId = button.getAttribute('data-audio');
+        const audio = document.getElementById(audioId);
+
+        // Pause all other audio
+        document.querySelectorAll('audio').forEach(a => {
+          if (a !== audio) a.pause();
+        });
+
+        // Toggle play/pause
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
